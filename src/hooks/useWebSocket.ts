@@ -6,13 +6,15 @@ export function useWebSocket() {
   useEffect(() => {
     const webSocket = new WebSocket(import.meta.env.VITE_WEB_SOCKET);
 
-    webSocket.onopen = () => {
+    webSocket.onopen = function (this, event) {
       console.debug("Connected to websocket");
+      console.debug(this);
+      console.debug(event);
       setWebSocket(webSocket);
     };
 
     webSocket.onmessage = (message) => {
-      console.debug(Date.now(), JSON.parse(message.data));
+      console.debug(Date(), message.data);
     };
 
     return () => webSocket.close();
